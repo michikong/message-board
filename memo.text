@@ -285,3 +285,38 @@ $ bundle install
 3.7 Git
 ---------------------------------
 
+---------------------------------
+3.8 REPL
+---------------------------------
+REPL とは
+REPLとは、 Read-eval-print loop の略で、
+「読み込み-処理-表示」の繰り返しという意味になります。対話型のRuby実行環境のことです。
+
+Ruby の REPL
+ターミナルで下記のコマンドを入力すると、Ruby の REPL が起動
+$ irb
+
+
+Rails の REPL
+irb コマンドで Ruby を対話的に実行できました
+しかし、 Ruby の REPL を起動しても、 Rails の機能は利用できません。
+Rails では rails c というコマンドを実行すると、Rails の機能を REPL が起動します。c は console の略
+
+irb と rails c との違い
+Rails ファイルが読み込まれるかどうか
+irb としただけでは、 Rails ファイルが読み込まれず Rails を使ったRubyオブジェクトを利用できない
+Rails プロジェクトでは rails console を起動して REPL を起動するように
+
+
+
+rails console 起動
+下記のコマンドで実際に起動してみてください。
+
+$ rails c
+
+
+コードを変更したら reload! する
+先に言っておきますが、Rails 上の Ruby コードを変更すると rails console で、 
+reload! コマンドを実行しないと再変更後の Ruby コードは反映されません。
+
+2.5.3 :001:0> reload!
