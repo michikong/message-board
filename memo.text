@@ -320,3 +320,125 @@ $ rails c
 reload! コマンドを実行しないと再変更後の Ruby コードは反映されません。
 
 2.5.3 :001:0> reload!
+
+
+---------------------------------
+4. データベースとRailsの接続設定
+---------------------------------
+Model の作成を始める前に、 Rails アプリケーションとデータベースの接続
+データベースを接続しないと、 Model の保存場所がない。
+Model はデータベースと密接に関わっており、データベースのレコードやカラムを参照する。
+
+まずはサーバを起動
+
+---------------------------------
+4.1 サーバの起動
+---------------------------------
+
+Rails のコマンドによってサーバを起動
+
+プロジェクトフォルダ(message-board/)にて、
+$ rails s
+
+---------------------------------
+4.2 エラーの発生
+---------------------------------
+
+エラータイトル: Mysql2::Error::ConnectionError
+
+mysql2 の Gem からエラーは発せられている
+データベースとの連携でエラーが出ていることを予想
+
+
+エラーメッセージ: Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock'
+
+MySQLサーバに接続できないと言っています。これは MySQL サーバが起動していないことが原因
+
+# MySQLを起動する
+$ sudo service mysqld start
+
+
+エラータイトル: Activerecord::NoDatabaseError
+
+NoDatabaseError
+データベースが無い
+
+エラーメッセージ: Unknown database 'message-board_development
+
+'message-board_development' のデータベース名で作成すれば良さそうだと予想できる
+
+---------------------------------
+4.3 データベースの作成
+---------------------------------
+rails db:create というコマンドが用意されているので、そちらを使用
+
+# DBを作成(mysqlを起動した状態で)
+$ rails db:create
+
+---------------------------------
+4.5 MySQL 連携の設定ファイルの確認
+---------------------------------
+
+Rails と MySQLの連携の設定をしているファイルを確認
+
+Railsのデータベース接続設定を管理しているファイル
+
+config/database.yml 
+
+        default: &default
+          adapter: mysql2
+          encoding: utf8
+          pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+          username: root
+          password:
+          host: localhost
+        
+        development:
+          <<: *default
+          database: message-board_development
+        
+        production:
+          <<: *default
+          database: message-board_production
+          username: message-board
+          password: <%= ENV['MESSAGE-BOARD_DATABASE_PASSWORD'] %>
+          
+          
+          設定内容	                    説明
+default: &default	                    設定を default という名前で共通化する
+   adapter: mysql2	                    mysql2 に接続することを明示
+   encoding: utf8	                    文字コードは utf8 で接続
+   pool: ...(省略)...	                ユーザ接続数の上限（あまり気にしなくて良い）
+   username: root	                    MySQL 接続時のユーザ名
+   password:	M                       ySQL 接続時のパスワード
+   host: localhost	                    MySQL のあるサーバ
+development:	                        開発環境上でのデータベース設定
+   <<: *default	                        共通化された default が読み込まれる
+   database: message-board_development	データベース名を明示
+production:	                            本番上でのデータベース設定（後ほど Heroku 環境で使用）
+   <<: *default	                        共通化された default が読み込まれる
+   database: message-board_production	データベース名の明示
+   username: message-board	            MySQL 接続時のユーザ名
+   password: <%= ENV['MESSAGE-          MySQL 接続時のパスワード
+   BOARD_DATABASE_PASSWORD'] %>	
+   
+   ENV['MESSAGE-BOARD_DATABASE_PASSWORD']
+   ↑これはMESSAGE-BOARD_DATABASE_PASSWORD の環境変数を読み込んでいる。
+   
+
+この設定を Rails がサーバ起動時に読み込むことによって、 Rails と MySQL の接続が確立（連携）
+
+# 環境変数の値を確認
+$ echo $IP
+$ echo $PORT
+
+# Cloud9 上で設定されている環境変数を全て確認
+$ env
+
+Rails サーバ起動中は環境変数は全て ENV の中に入っている。
+
+
+# rails consoleで環境変数を確認
+$ rails c
+
+> p ENV
