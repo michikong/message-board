@@ -709,3 +709,55 @@ messages#show というように Controller名 # アクション名 という形
 だが、Rails 側が show, create, update, destroy という命名を基本としているので、それに従うのがベター
 index, new, edit も同様に Rails 側が基本としているアクションの命名規則
 
+
+
+---------------------------------
+7.2 CRUDのための残り3つの補助ページ
+---------------------------------
+詳細ページ(show)にアクセスするには、一覧ページ(index)が必要
+  get 'messages/:id', to: 'messages#show'
+  
+詳細ページ(show)のルーティング
+このページにアクセスするにはまずリソースの一覧ページがないと、
+個別のリソースページである詳細ページへ（直接 URL を入力するしか）辿り着けない。
+その為、一覧ページ(index)を付け加える
+
+
+保存アクション(create)にデータを送るには、新規作成用のフォームページ(new)が必要
+  post 'messages', to: 'messages#create'
+
+保存アクション(create)
+このアクションを起こすときには必ずなんらかのデータを渡す必要があります。
+そのために使われるのが入力フォーム
+そのため、新規作成用のフォームページ(new)を追加。
+
+
+更新アクション(update)にデータを送るには、更新用のフォームページ(edit)が必要
+  put 'messages/:id', to: 'messages#update'
+  
+更新アクション(update)
+このアクションを起こすときには必ずなんらかのデータを渡す必要があります。
+そのために使われるのが入力フォーム
+更新用のフォームページ(edit)を追加。
+
+
+
+config/routes.rb
+
+   # index: show の補助ページ
+   get 'messages', to: 'messages#index'
+
+   # new: 新規作成用のフォームページ
+   get 'messages/new', to: 'messages#new'
+   
+   # edit: 更新用のフォームページ
+   get 'messages/:id/edit', to: 'messages#edit'
+   
+   
+
+削除アクション(delete)を起こすには、ボタンがあれば大丈夫
+削除アクションは、フォームにデータが不要なので、index, show, edit ページのどこかに
+削除ボタンが設置してあればそれで事足ります。
+そのため、削除のためのページは不要
+
+
