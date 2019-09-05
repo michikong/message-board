@@ -555,3 +555,71 @@ first	        最初のレコードを1件だけ取得する
 save	        レコードの作成
 update, save	データの更新
 destroy	        データの削除
+
+---------------------------------
+5.5 rails consoleでモデルのCRUD操作
+---------------------------------
+
+
+# all
+複数のレコードを取得するメソッド
+レコード全体を取得する
+> messages = Message.all
+
+
+# first
+最初のレコードのインスタンスを1つだけ返す
+first だけでなく、 second や third なども使用できる
+> message = Message.first
+
+
+# find
+id から単一のレコードを検索し返すメソッド
+id: 1 が検索され1つだけ取得されている
+> message = Message.find(1)
+
+
+# find_by
+find と違って id 以外でも単純な条件で検索可能
+> message = Message.find_by(content: 'sample1')
+
+
+# where
+条件指定をしてレコードを検索
+where(A: B) となっていた場合は、 A = B として条件が設定される
+> messages = Message.where(content: 'sample1')
+
+A: B 形式ではなく、文字列で条件を書くことで演算子 (>= 等) を書くことも可能
+> messages = Message.where('id >= 2')
+
+重要
+messages = ... と複数形の変数で書いてある通り、all と同じく複数レコードが代入される
+first や find, find_by は LIMIT 1 の SQL がつくので必ず単一のレコードが取得される
+
+first と組み合わせることで、単一のレコードを得ることも可能
+> message = Message.where('id >= 2').first
+
+
+# レコードの更新 (Update)
+レコードを一気に更新させるときは、find などでレコード（モデルのインスタンス）を取得したあとに、
+そのインスタンスに対して値を再代入し、save するのが通常です。
+> message = Message.first
+> message.content = 'おはよう'
+> message.save
+
+# 上記を一気に行う update
+> message = Message.first
+> message.update(content: 'こんばんは')
+
+# レコードの削除 (Delete)
+> message = Message.first
+> message.destroy
+
+---------------------------------
+5.6 まとめ
+---------------------------------
+Webアプリケーションでは Model が最も大事
+Model の CRUD 用メソッドを使って、しっかりレコードの CRUD をできるように
+実際の開発でも、 rails console 上で Model を操作したり動作確認することが多い
+rails console にも充分慣れておく。
+
