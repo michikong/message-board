@@ -665,3 +665,47 @@ Controller が HTTP リクエストを処理し終えて、最終的に HTTP レ
 HTTP リクエストは、入り口である Router を通り
 Router によって設定された Controller のアクションを通り
 Controller のアクションに対応した名前の View を HTTP レスポンスとして返す
+
+
+
+---------------------------------
+7. Router
+---------------------------------
+---------------------------------
+7.1 リソースに対する CRUD のための4つのルーティング
+---------------------------------
+
+リソース1つの CRUD に対応する HTTP リクエストのメソッド
+
+GET (Read)
+POST (Create)
+PUT (Update)
+DELETE (Delete)
+
+これに対応するルーティング
+
+config/routes.rb
+    
+    Rails.application.routes.draw do
+      get 'messages/:id', to: 'messages#show'
+      post 'messages', to: 'messages#create'
+      put 'messages/:id', to: 'messages#update'
+      delete 'messages/:id', to: 'messages#destroy'
+    end
+    
+:id について
+get, put, delete はどのレコードを操作するのかを明示する必要があるので、 
+URL に id が入れられることになる。
+/messages/1 という URL に対して GET メソッドのリクエストを送ると、
+id: 1 な Message を表示することになる。
+
+POST の場合だけは別で、 id が不要
+そもそも新規作成のメソッドなので、id はまだ用意されていない。
+/messages に POST メソッドでリクエストを送ると、新規作成される。
+
+
+messages#show というように Controller名 # アクション名 という形で表記
+アクション名に show, create, update, destroy とここでは書いていますが、任意のアクション名が設定できる。
+だが、Rails 側が show, create, update, destroy という命名を基本としているので、それに従うのがベター
+index, new, edit も同様に Rails 側が基本としているアクションの命名規則
+
