@@ -782,3 +782,35 @@ config/routes.rb 完成
     
       resources :messages
     end
+    
+---------------------------------
+7.5 Router の確認
+---------------------------------
+config/routes.rb を見れば、その Web アプリケーションでアクセス可能な URL は全てわかる。
+config/routes.rb では少し込み入ったコーディングも可能
+
+
+# 現状のルーティングを全て列挙する便利コマンド
+$ rails routes
+ルーティング一覧を確認することができる。
+
+例)
+      Prefix Verb   URI Pattern                  Controller#Action
+        root GET    /                            messages#index
+    messages GET    /messages(.:format)          messages#index
+             POST   /messages(.:format)          messages#create
+ new_message GET    /messages/new(.:format)      messages#new
+edit_message GET    /messages/:id/edit(.:format) messages#edit
+     message GET    /messages/:id(.:format)      messages#show
+             PATCH  /messages/:id(.:format)      messages#update
+             PUT    /messages/:id(.:format)      messages#update
+             DELETE /messages/:id(.:format)      messages#destroy
+             
+             
+root to: 'messages#index', resources :messages がちゃんと展開されているのを確認できる。
+PATCH は UPDATE メソッドのためのもの
+PUT は同じ
+
+RESTful
+
+7つの基本アクション(index, show, new, create, edit, update, destroy)
