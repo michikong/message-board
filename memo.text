@@ -814,3 +814,50 @@ PUT は同じ
 RESTful
 
 7つの基本アクション(index, show, new, create, edit, update, destroy)
+
+
+---------------------------------
+8. Controller と View
+---------------------------------
+Controller と View は密接に関わる
+
+---------------------------------
+8.1 Controller の生成
+---------------------------------
+
+# Controller の生成コマンド
+$ rails g controller コントローラ名
+
+g は generate
+コントローラ名は モデルの複数形 を記述
+Message モデルに対するコントローラであれば、ここには Messages と記述
+
+# オプションを追加して、下記のコマンドによって MessagesController を生成
+$ rails g controller Messages --no-helper --no-assets
+
+--no-helper, --no-assets は Helper と CSS と JavaScript を自動生成しないオプション
+
+上記コマンドで下記のログが出力
+
+      create  app/controllers/messages_controller.rb
+      invoke  erb
+      create    app/views/messages
+      
+      
+      
+Expected ... もログで表示されているかも
+自動生成オプションに関するログなので重要ではない。
+
+app/controllers/messages_controller.rb と app/views/messages が生成
+invoke erb は ERB 関連
+app/views/messages は ERB 関連
+後ほど、 app/views/messages/ フォルダには ERB ファイルを追加していくことになる。
+
+生成された app/controllers/messages_controller.rb を確認
+
+app/controllers/messages_controller.rb
+    
+    class MessagesController < ApplicationController
+    end
+    
+継承関係が続いています。これらの継承によって Controller としての基本機能が提供されています。
