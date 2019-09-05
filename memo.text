@@ -504,3 +504,37 @@ mysql> show tables;
 
 # テーブル設計の確認
 mysql> describe messages;
+
+---------------------------------
+5.3 モデルクラスの作成
+---------------------------------
+
+# マイグレーションファイルとモデルファイルを生成
+$ rails g model Message content:string
+
+モデルファイル
+app/models/message.rb
+
+    class Message < ApplicationRecord
+    end
+    
+
+Message クラスは ApplicationRecord クラスを継承している
+
+
+ApplicationRecord クラスが定義されたファイル
+app/models/application_record.rb
+
+    class ApplicationRecord < ActiveRecord::Base
+      self.abstract_class = true
+    end
+    
+    
+ApplicationRecord が更に ActiveRecord::Base を継承
+
+ActiveRecord::Base のコードに、 include ..., extend ... が大量にあり、
+これによってモデル操作の基本機能が実装されている。
+そのため、ActiveRecord::Base → ApplicationRecord という順番でクラスを継承した Message モデルには、
+それらの機能が全て継承されており、
+Message クラスにコードが無くてもモデル操作できるようになっている。
+
