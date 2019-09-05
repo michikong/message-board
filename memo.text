@@ -623,3 +623,18 @@ Model の CRUD 用メソッドを使って、しっかりレコードの CRUD �
 実際の開発でも、 rails console 上で Model を操作したり動作確認することが多い
 rails console にも充分慣れておく。
 
+---------------------------------
+5.7 Git
+---------------------------------
+# ステータス取得
+$ git status
+
+# 差分確認
+$ git diff
+
+# バージョン管理の対象として追加
+$ git add .
+
+# ファイルの変更をgitレポジトリに保存
+$ git commit -m 'message model'
+
