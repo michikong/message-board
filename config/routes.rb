@@ -18,5 +18,7 @@
 
 # 上記と全く同じ意味
 Rails.application.routes.draw do
-  resources :messages
+   root to: 'messages#index'
+   
+   resources :messages
 end

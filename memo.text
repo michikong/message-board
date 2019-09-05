@@ -770,3 +770,15 @@ config/routes.rb
     Rails.application.routes.draw do
       resources :messages
     end
+    
+---------------------------------
+7.4 Router の完成
+---------------------------------
+
+config/routes.rb 完成
+    
+    Rails.application.routes.draw do
+      root to: 'messages#index'
+    
+      resources :messages
+    end
