@@ -869,3 +869,78 @@ config/routes.rb で設定したルーティングに対応したアクション
 messages_controller.rb に追加
 resources :messages で指定した下記の RESTful なルーティングに対応するように 
 messages_controller.rb に追記
+
+---------------------------------
+8.3 View の構成について
+---------------------------------
+作成
+
+app/views/messages/index.html.erb
+app/views/messages/show.html.erb
+app/views/messages/new.html.erb
+app/views/messages/edit.html.erb
+
+index.html.erb のように .erb だけでなく、.html と入れている理由
+ERB ファイルが HTML ファイルへと変換されることを Rails に対して明示するため
+
+ERB
+HTML だけでなく、単純なテキストファイル (.text) でも使用できる、汎用的な Ruby コード埋め込み形式
+
+例えば、メールを送るときにテキスト形式のメールか HTML 形式のメールかを明示するときに、
+filename.text.erb などとして使用
+
+拡張子の順番は .html.erb である必要がある。
+
+
+
+View(ERB) は、基本的には HTML を記述
+
+
+app/views/laytous/application.html.erb
+    
+    
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>MessageBoard</title>
+        <%= csrf_meta_tags %>
+        <%= csp_meta_tag %>
+    
+        <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+        <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+      </head>
+    
+      <body>
+        <%= yield %>
+      </body>
+    </html>
+
+# セキュリティ対策用のコード
+csrf_meta_tags と csp_meta_tag
+
+# CSS を読み込むためのコード
+stylesheet_link_tag ... 
+
+# JavaScript を読み込むためのコード
+javascript_include_tag ... 
+
+
+重要
+
+body要素内の <%= yield %>
+body要素内に埋め込まれるページが切り替わる
+<%= yield %> があるところ（つまりbody要素内）に 
+index.html.erb や show.html.erb などの各ページの内容が代入される
+
+/messages というルーティングにブラウザでアクセス
+↓
+MessageController の index アクションが呼び出され
+↓
+app/views/layouts/application.html.erb が呼び出され
+↓
+<%= yield %>の所にapp/views/messages/index.html.erb の内容が代入
+
+
+<%= yield %> のおかげで、body要素内以外は共通化
+body要素内はアクセスされたページ毎のコンテンツが切り替えられて表示される
+
