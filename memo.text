@@ -861,3 +861,11 @@ app/controllers/messages_controller.rb
     end
     
 継承関係が続いています。これらの継承によって Controller としての基本機能が提供されています。
+
+---------------------------------
+8.2 Controller を RESTful なルーティングに対応させる
+---------------------------------
+config/routes.rb で設定したルーティングに対応したアクションを 
+messages_controller.rb に追加
+resources :messages で指定した下記の RESTful なルーティングに対応するように 
+messages_controller.rb に追記
