@@ -944,3 +944,20 @@ app/views/layouts/application.html.erb が呼び出され
 <%= yield %> のおかげで、body要素内以外は共通化
 body要素内はアクセスされたページ毎のコンテンツが切り替えられて表示される
 
+
+
+---------------------------------
+8.4 messages#index
+---------------------------------
+
+ index アクションに対応する Controller と View を開発
+ 
+ Controller
+ 
+ index アクションの役割
+ Message モデルのレコードの一覧表示
+ 
+ 
+ Message.all 
+ Message のレコードを全て取得
+
