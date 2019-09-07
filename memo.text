@@ -961,3 +961,53 @@ body要素内はアクセスされたページ毎のコンテンツが切り替�
  Message.all 
  Message のレコードを全て取得
 
+---------------------------------
+8.5 messages#show
+---------------------------------
+
+
+index から show へのリンクを追加する
+
+app/views/messages/index.html.erb
+
+    
+    <h1>メッセージ一覧</h1>
+    
+    <ul>
+      <% @messages.each do |message| %>
+        <li><%= link_to message.id, message %> : <%= message.content %></li>
+      <% end %>
+    </ul>
+
+
+link_to
+
+Rails が提供する便利メソッドで、
+link_to 表示文字列, リンク先 
+という形で記述します。ここでは、表示文字列 は message.id つまりメッセージの id であり、
+リンク先 は message となっています。リンク先 として message のように Model の
+インスタンス（レコード）を渡すと、自動的にそのインスタンスの show アクションへとリンクされるようになります。
+省略せずに書くと message_path(message) となり、リンク先 にこう記述しても正常に動作します。 
+message も message_path(message) もどちらも最終的に /messages/1 など
+/messages/:id の形の URL を生成しているだけです。
+
+
+$ rails routes
+
+      Prefix Verb   URI Pattern                  Controller#Action
+    messages GET    /messages(.:format)          messages#index
+             POST   /messages(.:format)          messages#create
+ new_message GET    /messages/new(.:format)      messages#new
+edit_message GET    /messages/:id/edit(.:format) messages#edit
+     message GET    /messages/:id(.:format)      messages#show
+             PATCH  /messages/:id(.:format)      messages#update
+             PUT    /messages/:id(.:format)      messages#update
+             DELETE /messages/:id(.:format)      messages#destroy
+             
+             
+             
+ルーティング	        リンク生成メソッドの使用例	   生成されるリンク
+index	                messages_path	                /messages
+show	                message_path(@message)	        /messages/1 など
+new	                    new_message_path	            /messages/new
+edit	                edit_message_path(@message)	    /messages/1/edit など
