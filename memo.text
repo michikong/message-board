@@ -1011,3 +1011,21 @@ index	                messages_path	                /messages
 show	                message_path(@message)	        /messages/1 など
 new	                    new_message_path	            /messages/new
 edit	                edit_message_path(@message)	    /messages/1/edit など
+
+
+---------------------------------
+8.6 messages#new
+---------------------------------
+
+
+new アクション
+
+POST メソッドを送信する新規作成用の入力フォーム置き場
+
+Messageモデルのためのフォームなので
+@message = Message.new でインスタンスを作成
+
+
+ERB にフォームを設置
+
+form_withについて
