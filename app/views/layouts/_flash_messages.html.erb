@@ -1,0 +1,8 @@
+<!--flash に代入された全てのメッセージが1つ1つ取り出されて、全て表示-->
+<!--message_type には :success が代入-->
+<!--message に 'Message が正常に投稿されました' が代入-->
+<!--message のみ表示される-->
+<% flash.each do |message_type, message| %>
+  <div><%= message %></div>
+<% end %>
+

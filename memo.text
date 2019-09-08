@@ -410,7 +410,7 @@ default: &default	                    設定を default という名前で共通
    encoding: utf8	                    文字コードは utf8 で接続
    pool: ...(省略)...	                ユーザ接続数の上限（あまり気にしなくて良い）
    username: root	                    MySQL 接続時のユーザ名
-   password:	M                       ySQL 接続時のパスワード
+   password:	                        MySQL 接続時のパスワード
    host: localhost	                    MySQL のあるサーバ
 development:	                        開発環境上でのデータベース設定
    <<: *default	                        共通化された default が読み込まれる
@@ -1029,3 +1029,10 @@ Messageモデルのためのフォームなので
 ERB にフォームを設置
 
 form_withについて
+
+---------------------------------
+8.7 messages#create
+---------------------------------
+create アクション
+new のページから送信されるフォームを処理
+
