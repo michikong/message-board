@@ -1049,3 +1049,26 @@ params[:id]による検索は show アクションと全く同じ
 
 @message = Message.find(params[:id])
 @message には content が最初から入っている
+
+---------------------------------
+8.9 messages#update
+---------------------------------
+
+update は create に似ている。
+id で検索するところ
+
+app/controllers/messages_controller.rb
+
+  def update
+    @message = Message.find(params[:id])
+
+    if @message.update(message_params)
+      flash[:success] = 'Message は正常に更新されました'
+      redirect_to @message
+    else
+      flash.now[:danger] = 'Message は更新されませんでした'
+      render :edit
+    end
+  end
+  
+リダイレクトしているので、 View は不要
