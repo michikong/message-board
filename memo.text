@@ -1101,4 +1101,14 @@ app/views/messages/show.html.erb
     <%= link_to 'このメッセージを削除する', @message, method: :delete, data: { confirm: '本当に削除してよろしいですか？' }
     
     
-    
+---------------------------------
+8.11 Git
+---------------------------------
+
+$ git status
+
+$ git diff
+
+$ git add .
+
+$ git commit -m 'CRUD messages'
