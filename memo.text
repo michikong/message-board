@@ -1051,7 +1051,7 @@ params[:id]による検索は show アクションと全く同じ
 @message には content が最初から入っている
 
 ---------------------------------
-8.9 messages#update
+8.9_messages#update
 ---------------------------------
 
 update は create に似ている。
@@ -1072,3 +1072,33 @@ app/controllers/messages_controller.rb
   end
   
 リダイレクトしているので、 View は不要
+
+---------------------------------
+8.10 messages#destroy
+---------------------------------
+app/controllers/messages_controller.rb
+
+  def destroy
+    @message = Message.find(params[:id])
+    @message.destroy
+
+    flash[:success] = 'Message は正常に削除されました'
+    redirect_to messages_url
+  end
+  
+  
+リダイレクトしているので View は不要
+ただし、削除するためのリンクは設置する必要があるので、 show.html.erb に削除リンクを設置
+
+app/views/messages/show.html.erb
+
+    <h1>id: <%= @message.id %> のメッセージ詳細ページ</h1>
+    
+    <p><%= @message.content %></p>
+    
+    <%= link_to '一覧に戻る', messages_path %>
+    <%= link_to 'このメッセージを編集する', edit_message_path(@message) %>
+    <%= link_to 'このメッセージを削除する', @message, method: :delete, data: { confirm: '本当に削除してよろしいですか？' }
+    
+    
+    
