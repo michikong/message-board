@@ -1,7 +1,6 @@
 <h1>id: <%= @message.id %> のメッセージ詳細ページ</h1>
 
-<p><%= @message.content %></p>
-
+<li>メッセージ           : <%= @message.content %></li>
 <%= link_to '一覧に戻る', messages_path %>
 <%= link_to 'このメッセージを編集する', edit_message_path(@message) %>
 <!--method: :delete DELETE メソッドを送信することを明示-->
