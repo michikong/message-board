@@ -3,6 +3,5 @@
 <!--message に 'Message が正常に投稿されました' が代入-->
 <!--message のみ表示される-->
 <% flash.each do |message_type, message| %>
-  <div><%= message %></div>
+  <div class="alert alert-<%= message_type %>"><%= message %></div>
 <% end %>
-
